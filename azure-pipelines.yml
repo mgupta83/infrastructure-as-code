@@ -12,6 +12,7 @@ pool:
 variables:
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
+  deploymentDefaultLocation: 'westus3'
 
 stages:
 - stage: Initial
@@ -29,3 +30,20 @@ stages:
         echo Add other tasks to build, test, and deploy your project.
         echo See https://aka.ms/yaml
       displayName: 'Run a multi-line script'
+
+- stage: QA
+  displayName: QA stage
+  jobs:
+  - job: Infrastructure Setup 
+    displayName: Infrastructure Setup 
+    pool:
+      vmImage: $(vmImageName) 
+    steps:
+    - task: AzureResourceManagerTemplateDeployment@3
+      inputs:
+        connectedServiceName: $(ServiceConnectionName)
+        deploymentName: $(Build.BuildNumber)
+        location: $(deploymentDefaultLocation)
+        resourceGroupName: $(ResourceGroupName)
+        csmFile: data-access-qa-pg.bicep
+        
