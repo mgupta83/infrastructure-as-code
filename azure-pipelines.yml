@@ -34,7 +34,7 @@ stages:
 - stage: QA
   displayName: QA stage
   jobs:
-  - job: Infrastructure Setup 
+  - job: Infrastructure 
     displayName: Infrastructure Setup 
     pool:
       vmImage: $(vmImageName) 
