@@ -113,7 +113,7 @@ resource databaseAccounts_data_access_qa_name_efm_qa_default 'Microsoft.Document
   name: 'default'
   properties: {
     resource: {
-      throughput: 100
+      // throughput: 100
       autoscaleSettings: {
         maxThroughput: 1000
       }
