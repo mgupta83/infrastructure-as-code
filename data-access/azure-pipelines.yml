@@ -45,5 +45,7 @@ stages:
         deploymentName: $(Build.BuildNumber)
         location: $(deploymentDefaultLocation)
         resourceGroupName: $(ResourceGroupName)
-        csmFile: data-access-qa-pg.bicep
+        csmFile: ./infrastructure/main.bicep
+        overrideParameters: >
+              -environment 'qa'
         
