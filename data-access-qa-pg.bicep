@@ -1,4 +1,4 @@
-param databaseAccounts_data_access_qa_name string = 'data-access-qa'
+param databaseAccounts_data_access_qa_name string = 'data-access-efdo11-qa'
 
 resource databaseAccounts_data_access_qa_name_resource 'Microsoft.DocumentDB/databaseAccounts@2022-08-15' = {
   name: databaseAccounts_data_access_qa_name
@@ -19,7 +19,7 @@ resource databaseAccounts_data_access_qa_name_resource 'Microsoft.DocumentDB/dat
     enableClientTelemetry: false
     virtualNetworkRules: []
     disableKeyBasedMetadataWriteAccess: false
-    enableFreeTier: true
+    enableFreeTier: false
     enableAnalyticalStorage: false
     analyticalStorageConfiguration: {
       schemaType: 'FullFidelity'
@@ -77,50 +77,55 @@ resource databaseAccounts_data_access_qa_name_resource 'Microsoft.DocumentDB/dat
 
 resource databaseAccounts_data_access_qa_name_efm_qa 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2022-08-15' = {
   parent: databaseAccounts_data_access_qa_name_resource
-  name: 'efm-qa'
+  name: 'efdo11-qa'
   properties: {
     resource: {
-      id: 'efm-qa'
+      id: 'efdo11-qa'
     }
-  }
-}
-
-resource databaseAccounts_data_access_qa_name_efm_qa_applicants 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections@2022-08-15' = {
-  parent: databaseAccounts_data_access_qa_name_efm_qa
-  name: 'applicants'
-  properties: {
-    resource: {
-      id: 'applicants'
-      indexes: [
-        {
-          key: {
-            keys: [
-              '_id'
-            ]
-          }
-        }
-      ]
-    }
-  }
-  dependsOn: [
-
-    databaseAccounts_data_access_qa_name_resource
-  ]
-}
-
-resource databaseAccounts_data_access_qa_name_efm_qa_default 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/throughputSettings@2022-08-15' = {
-  parent: databaseAccounts_data_access_qa_name_efm_qa
-  name: 'default'
-  properties: {
-    resource: {
-      // throughput: 100
+    options: {
       autoscaleSettings: {
         maxThroughput: 1000
       }
     }
   }
-  dependsOn: [
-
-    databaseAccounts_data_access_qa_name_resource
-  ]
 }
+
+// resource databaseAccounts_data_access_qa_name_efm_qa_applicants 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections@2022-08-15' = {
+//   parent: databaseAccounts_data_access_qa_name_efm_qa
+//   name: 'applicants'
+//   properties: {
+//     resource: {
+//       id: 'applicants'
+//       indexes: [
+//         {
+//           key: {
+//             keys: [
+//               '_id'
+//             ]
+//           }
+//         }
+//       ]
+//     }
+//   }
+//   dependsOn: [
+
+//     databaseAccounts_data_access_qa_name_resource
+//   ]
+// }
+
+// resource databaseAccounts_data_access_qa_name_efm_qa_default 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/throughputSettings@2022-08-15' = {
+//   parent: databaseAccounts_data_access_qa_name_efm_qa
+//   name: 'default'
+//   properties: {
+//     resource: {
+//       // throughput: 100
+//       autoscaleSettings: {
+//         maxThroughput: 1000
+//       }
+//     }
+//   }
+//   dependsOn: [
+
+//     databaseAccounts_data_access_qa_name_resource
+//   ]
+// }

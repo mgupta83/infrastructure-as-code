@@ -42,8 +42,11 @@ module mongoDatabaseAccount './modules/mongo-database-account.bicep' = {
 module mongoDatabase './modules/mongo-database.bicep' = {
   name: 'mongoDatabaseModule'
   params: {
-    mongoDatabaseAccountName: mongoDatabaseAccountName
+    mongoDatabaseAccountName: mongoDatabaseAccount.outputs.mongoDatabaseAccountName
     mongoDatabaseName: mongoDatabaseName
-    maxThroughput: envParams.mongoDatabaseThroughputSettingsAutoscale.maxThroughput
+    maxThroughput: envParams.mongoDatabase.throughputSettingsAutoscale.maxThroughput
   }
+  dependsOn: [
+    mongoDatabaseAccount
+  ]
 }

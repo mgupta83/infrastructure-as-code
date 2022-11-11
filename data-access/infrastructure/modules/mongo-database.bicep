@@ -1,6 +1,12 @@
+@description('name of the MongoDB account')
 param mongoDatabaseAccountName string
+
+@description('name of the MongoDB database')
 param mongoDatabaseName string
+
+@description('maxThroughput for Autoscale Throughput Settings of the MongoDB database')
 param maxThroughput int
+
 
 resource mongoDatabaseAccount 'Microsoft.DocumentDB/databaseAccounts@2022-08-15' existing = {
   name: mongoDatabaseAccountName
@@ -12,24 +18,10 @@ resource mongoDatabase 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2
     resource: {
       id: mongoDatabaseName
     }
-  }
-  dependsOn: [
-    mongoDatabaseAccount
-  ]
-}
-
-resource mongoDatabaseThroughputSettingsAutoscale 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/throughputSettings@2022-08-15' = {
-  parent: mongoDatabase
-  name: 'default'
-  properties: {
-    resource: {
-      // throughput: 100
+    options: {
       autoscaleSettings: {
         maxThroughput: maxThroughput
       }
     }
   }
-  dependsOn: [
-    mongoDatabase
-  ]
 }

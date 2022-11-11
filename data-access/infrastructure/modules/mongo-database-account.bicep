@@ -14,7 +14,6 @@ param backupIntervalInMinutes int
 param backupRetentionIntervalInHours int
 
 
-@description('MongoDB Account')
 resource mongoDatabaseAccount 'Microsoft.DocumentDB/databaseAccounts@2022-08-15' = {
   name: mongoDatabaseAccountName
   location: location
@@ -89,3 +88,6 @@ resource mongoDatabaseAccount 'Microsoft.DocumentDB/databaseAccounts@2022-08-15'
     // }
   }
 }
+
+
+output mongoDatabaseAccountName string = mongoDatabaseAccount.name
