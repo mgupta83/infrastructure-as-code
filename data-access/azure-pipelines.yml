@@ -47,5 +47,5 @@ stages:
         resourceGroupName: $(ResourceGroupName)
         csmFile: data-access/infrastructure/main.bicep
         overrideParameters: >
-              -environment 'qa'
+              -environment qa
         
