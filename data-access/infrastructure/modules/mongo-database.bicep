@@ -13,6 +13,9 @@ resource mongoDatabase 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2
       id: mongoDatabaseName
     }
   }
+  dependsOn: [
+    mongoDatabaseAccount
+  ]
 }
 
 resource mongoDatabaseThroughputSettingsAutoscale 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/throughputSettings@2022-08-15' = {
@@ -26,7 +29,7 @@ resource mongoDatabaseThroughputSettingsAutoscale 'Microsoft.DocumentDB/database
       }
     }
   }
-  // dependsOn: [
-  //   mongoDatabase
-  // ]
+  dependsOn: [
+    mongoDatabase
+  ]
 }
